@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    align-content: center;
+    text-align: center;
+    font-family:'Courier New', Courier, monospace;
+    background-color: white;
+    color: black;
+}
+
+.right-animation {
+    animation-name: right;
+    animation-duration: 0.25s;
+}
+
+.wrong-animation {
+  animation-name: wrong;
+  animation-duration: 0.25s;
+}
+
+.puzzle-count {
+    position: absolute;
+    padding: 5px;
+    pointer-events: none;
+    font-weight: bold;
+    color: rgba(0,0,0,0.8);
+    z-index: 10;
+    font-size: 30px;
+
+}
+
+.clickable {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.pos-absolute {
+    position: absolute;
+}
+
+@keyframes right {
+    0% {
+      background-color:white;
+    }
+    1% {
+      background-color: #42f451;
+    }
+    100% {
+      background-color: white;
+    }
+}
+
+@keyframes wrong {
+  0% {
+    background-color:white;
+  }
+  1% {
+    background-color: #f44251;
+  }
+  100% {
+    background-color: white;
+  }
+}
