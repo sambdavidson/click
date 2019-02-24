@@ -7,6 +7,10 @@ body {
     color: black;
 }
 
+.semi-transparent {
+  color: rgba(0,0,0,0.5);
+}
+
 .right-animation {
     animation-name: right;
     animation-duration: 0.25s;
@@ -35,6 +39,7 @@ body {
 
 .pos-absolute {
     position: absolute;
+    transform: translate(-50%, -50%);
 }
 
 @keyframes right {

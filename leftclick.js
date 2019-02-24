@@ -1,7 +1,7 @@
 window.onload = next;
 
-let currentLevel = 7;
-let levels = [welcome, pos1, pos2, pos4, pos5, big, small, magicWord, pressSpacebar];
+let currentLevel = -1;
+let levels = [welcome, pos1, pos2, pos4, pos5, big, small, math1, magicWord, pressS, pressSpacebar, lol, samIsHandsome, deepDarkSecret, woof, end];
 
 function next() {
 
@@ -51,7 +51,8 @@ function welcome(body, nextCb) {
     let subheader = document.createElement('h4');
     subheader.innerText = 'created Samuel Davidson';
     let github = document.createElement('a');
-    github.href = 'www.github.com/samdamana';
+    github.innerText = 'GitHub'
+    github.href = 'https://www.github.com/samdamana/click';
     github.target = '_blank';
     let next = document.createElement('h2');
     next.className = 'clickable'
@@ -76,7 +77,7 @@ function pos2(body, nextCb) {
     next.className = 'clickable pos-absolute';
     next.onclick = nextCb;
     next.innerText = 'Nice! And me next.'
-    next.style.top = '20%';
+    next.style.top = '10%';
     next.style.left = '20%';
     
     body.append(next);
@@ -137,36 +138,75 @@ function small(body, nextCb) {
     body.append(next);
 }
 
+function math1(body, nextCb) {
+    let next = document.createElement('h2');
+    next.className = 'clickable pos-absolute';
+    next.onclick = () => {
+        let answer = prompt("");
+        let lower = answer.toLowerCase();
+        if (lower === '3') {
+            nextCb();
+        } else {
+            wrong(body);
+        }
+    }
+    next.innerText = 'You got it! What is 8-5?'
+    next.style.top = '30%';
+    next.style.left = '30%';
+    
+    body.append(next);
+}
+
 function magicWord(body, nextCb) {
     let next = document.createElement('h2');
     next.className = 'clickable pos-absolute';
     next.onclick = () => {
-        let answer = prompt("What is the magic word?");
+        let answer = prompt("");
         if (answer === 'please') {
             nextCb();
         } else {
-            wrong(document.body);
+            wrong(body);
         }
     }
-    next.innerText = 'whats the magic word?'
+    next.innerText = 'GJ. Now whats the magic word?'
     next.style.top = '50%';
     next.style.left = '40%';
     
     body.append(next);
 }
 
-function pressSpacebar(body, nextCb) {
+function pressS(body, nextCb) {
     let next = document.createElement('h2');
-    next.className = 'clickable pos-absolute';
-    next.innerText = 'Okay! Now press spacebar.';
+    next.className = 'pos-absolute semi-transparent';
+    next.innerText = 'press s';
     next.style.top = '70%';
     next.style.left = '40%';
 
     let kd = (ev) => {
-        console.log(ev);
-        if (ev.key === ' ') {
-            next.innerText = 'lol cool thanks';
+        if (ev.key === 's') {
+            next.classList.add('clickable');
+            next.classList.remove('semi-transparent');
+            next.innerText = 'thanks';
+            next.onclick = nextCb;
             document.body.removeEventListener('keydown', kd);
+        }
+
+    }
+
+    document.body.addEventListener('keydown', kd);
+    body.append(next);
+}
+
+function pressSpacebar(body, nextCb) {
+    let next = document.createElement('h2');
+    next.className = 'clickable pos-absolute';
+    next.innerText = 'Now press spacebar';
+    next.style.top = '10%';
+    next.style.left = '20%';
+
+    let kd = (ev) => {
+        if (ev.key === ' ') {
+            next.innerText = next.innerText + '... again';
         }
 
     }
@@ -179,4 +219,125 @@ function pressSpacebar(body, nextCb) {
     body.append(next);
 }
 
+function lol(body, nextCb) {
+    let next = document.createElement('h2');
+    next.className = 'clickable pos-absolute';
+    next.onclick = nextCb;
+    next.innerText = 'lol'
+    next.style.top = '20%';
+    next.style.left = '20%';
+    
+    body.append(next);
+}
+
+function samIsHandsome(body, nextCb) {
+    let suffix = ' is very handsome';
+    let next = document.createElement('h2');
+    next.className = 'pos-absolute semi-transparent';
+    next.innerText = '______' + suffix;
+    next.style.top = '80%';
+    next.style.left = '50%';
+
+    let word = 'Samuel';
+    let correct = 0;
+    let kd = (ev) => {
+        if (ev.key.toLowerCase() === word[correct].toLowerCase()) {
+            correct++;
+            if (correct == word.length) {
+                next.innerText = word + suffix;
+                next.classList.add('clickable');
+                next.classList.remove('semi-transparent');
+                next.onclick = nextCb;
+                body.removeEventListener('keydown', kd);    
+            }
+            let prefix = '';
+            for(let i = 0; i < word.length; i++) {
+                if (i < correct) {
+                    prefix += word[i];
+                } else {
+                    prefix += '_';
+                }
+            } 
+            next.innerText = prefix + suffix;
+        }
+
+    }
+
+    body.addEventListener('keydown', kd);
+    body.append(next);
+}
+
+let deepestDarkestSecret = '';
+let alphaNumericSpace = new RegExp("^[a-zA-Z0-9 \?\'\.\!]$");
+function deepDarkSecret(body, nextCb) {
+    let next = document.createElement('h2');
+    next.className = 'pos-absolute semi-transparent';
+    next.innerText = 'Tell me your deepest darkest secret. Press enter when done.';
+    next.style.top = '50%';
+    next.style.left = '50%';
+
+    let kd = (ev) => {
+        if (ev.key === 'Enter') {
+            next.classList.add('clickable');
+            next.classList.remove('semi-transparent');
+            next.innerText = 'your secret is safe with me :)';
+            next.onclick = nextCb;
+            body.removeEventListener('keydown', kd);
+        } else if (alphaNumericSpace.test(ev.key)) {
+            deepestDarkestSecret += ev.key;
+        }
+
+    }
+
+    body.addEventListener('keydown', kd);
+    body.append(next);
+}
+
+function showYourSecret(body, nextCb) {
+
+}
+
+function woof(body, nextCb) {
+    let header = document.createElement('h1');
+    header.classList.add('pos-absolute');
+    header.style.top = '10%';
+    header.style.left = '50%';
+    header.innerText = 'Bork?';
+
+    let woof = document.createElement('img');
+    woof.classList.add('pos-absolute', 'clickable', 'centered');
+    woof.src = 'images/labdog.jpg';
+    woof.style.display = 'block';
+    woof.style.top = '50%';
+    woof.style.left = '50%';
+    woof.onclick = nextCb;
+
+    body.append(header, woof);
+}
+
+function woof2(body, nextCb) {
+    let header = document.createElement('h1');
+    header.classList.add('pos-absolute');
+    header.style.top = '10%';
+    header.style.left = '50%';
+    header.innerText = 'Bork?';
+
+    let woof = document.createElement('img');
+    woof.classList.add('pos-absolute', 'clickable', 'centered');
+    woof.src = 'images/labdog.jpg';
+    woof.style.display = 'block';
+    woof.style.top = '50%';
+    woof.style.left = '50%';
+    woof.onclick = nextCb;
+
+    body.append(header, woof);
+}
+
+function end(body, nextCb) {
+    let header = document.createElement('h1');
+    header.classList.add('pos-absolute');
+    header.style.top = '10%';
+    header.style.left = '50%';
+    header.innerText = 'The End';
+}
 // Ending like when you play solitaire and fireworks shoot up at the end.
